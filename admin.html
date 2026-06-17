@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>后台管理系统</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<!-- 登录页面 -->
+
+<div id="loginPage" class="login-box">
+
+    <h2>后台管理登录</h2>
+
+    <br>
+
+    <label>用户名</label>
+
+    <input type="text" id="username">
+
+    <label>密码</label>
+
+    <input type="password" id="password">
+
+    <button onclick="login()">
+
+        登录
+
+    </button>
+
+</div>
+
+<!-- 管理后台 -->
+
+<div id="adminPanel" class="admin-panel" style="display:none;">
+
+    <h2>湖北慧耕农业科技有限公司后台管理系统</h2>
+
+    <br>
+
+    <h3>公司简介</h3>
+
+    <textarea
+        id="aboutInput"
+        rows="8">
+    </textarea>
+
+    <h3>联系电话</h3>
+
+    <input type="text" id="phoneInput">
+
+    <h3>电子邮箱</h3>
+
+    <input type="text" id="emailInput">
+
+    <h3>公司地址</h3>
+
+    <input type="text" id="addressInput">
+
+    <h3>产品信息</h3>
+
+    <textarea
+        id="productInput"
+        rows="12">
+    </textarea>
+
+    <h3>工程案例</h3>
+
+    <textarea
+        id="caseInput"
+        rows="10">
+    </textarea>
+
+    <h3>新闻中心</h3>
+
+    <textarea
+        id="newsInput"
+        rows="10">
+    </textarea>
+
+    <button onclick="saveData()">
+
+        保存修改
+
+    </button>
+
+    <button onclick="logout()">
+
+        退出登录
+
+    </button>
+
+    <br><br>
+
+    <p>
+        修改完成后会自动生成新的数据，
+        重新刷新首页即可查看效果。
+    </p>
+
+</div>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品详情 - 湖北慧耕农业科技有限公司</title>
+<link rel="stylesheet" href="css/style.css?v=2.1">
+</head>
+<body class="page-sub">
+<header class="header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html">
+            <img src="images/logo-icon.png" alt="湖北慧耕农业科技有限公司" class="logo-img">
+            <div class="logo-text"><h2>湖北慧耕农业科技有限公司</h2><p>HUBEI HUIGENG AGRICULTURAL TECHNOLOGY CO., LTD</p></div>
+        </a>
+        <nav class="nav"><ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="solutions.html" class="active">行业解决方案</a></li>
+            <li><a href="cases.html">服务项目</a></li>
+            <li><a href="service.html">服务与支持</a></li>
+            <li><a href="index.html#contact">联系我们</a></li>
+            <li><a href="admin.html" class="admin-btn">后台管理</a></li>
+        </ul></nav>
+    </div>
+</header>
+
+<main>
+    <!-- 面包屑 -->
+    <div class="detail-breadcrumb-wrap">
+        <div class="container">
+            <nav class="page-breadcrumb"><a href="index.html">首页</a><span>›</span><a href="solutions.html">行业解决方案</a><span>›</span><span class="cur" id="breadcrumbName">产品详情</span></nav>
+        </div>
+    </div>
+
+    <!-- 产品详情 -->
+    <section class="section" style="padding-top:48px">
+        <div class="container">
+            <div class="product-detail-layout" id="productDetail">
+                <!-- JS 动态渲染 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 相关产品 -->
+    <section class="section section-muted" style="padding-top:0">
+        <div class="container">
+            <div class="section-heading">
+                <h2 class="title" style="font-size:24px">相关产品</h2>
+            </div>
+            <div class="related-products" id="relatedProducts"></div>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container footer-inner">
+    <p>© 2026 湖北慧耕农业科技有限公司</p>
+    <p>智慧农业 · 节水灌溉 · 科技赋能</p>
+</div></footer>
+
+<script>
+(function(){
+    var params=new URLSearchParams(window.location.search);
+    var id=parseInt(params.get("id"),10);
+
+    function loadData(){
+        var local=localStorage.getItem("websiteData");
+        if(local) return Promise.resolve(JSON.parse(local));
+        return fetch("data/content.json").then(function(r){return r.json()});
+    }
+
+    function render(p, allProducts, idx){
+        document.title=p.name+" - 湖北慧耕农业科技有限公司";
+        document.getElementById("breadcrumbName").textContent=p.name;
+
+        var summary = p.summary || p.desc || "";
+        var features = p.features || p.points || [];
+        var specs = p.specs || {};
+        var pts=features.map(function(pt){return '<li><span class="check">✓</span>'+pt+'</li>'}).join("");
+
+        /* 技术参数表格：优先用 specs 对象，否则用硬编码默认值 */
+        var specRows = '';
+        if (specs && typeof specs === 'object' && Object.keys(specs).length) {
+            Object.keys(specs).forEach(function(k){
+                specRows += '<tr><td>'+k+'</td><td>'+specs[k]+'</td></tr>';
+            });
+        } else {
+            specRows = '<tr><td>产品类型</td><td>'+(p.tag||'智慧农业设备')+'</td></tr>'+
+                '<tr><td>供电方式</td><td>太阳能 / 市电 / 电池</td></tr>'+
+                '<tr><td>通信方式</td><td>4G / LoRa / NB-IoT / WiFi</td></tr>'+
+                '<tr><td>工作温度</td><td>-20℃ ~ 60℃</td></tr>';
+        }
+
+        document.getElementById("productDetail").innerHTML=
+            '<div class="pd-image">'+
+                '<img src="'+p.image+'" alt="'+p.name+'">'+
+            '</div>'+
+            '<div class="pd-info">'+
+                '<span class="product-tag">'+(p.tag||"智慧农业设备")+'</span>'+
+                '<h1>'+p.name+'</h1>'+
+                '<p class="pd-desc">'+summary+'</p>'+
+                (pts?'<div class="pd-features"><h3>核心特点</h3><ul>'+pts+'</ul></div>':'')+
+                '<div class="pd-specs">'+
+                    '<h3>技术参数</h3>'+
+                    '<table class="spec-table">'+specRows+'</table>'+
+                '</div>'+
+                '<div class="pd-actions">'+
+                    '<a href="index.html#contact" class="primary-btn">咨询报价</a>'+
+                    '<a href="cases.html" class="ghost-btn-dark">查看案例</a>'+
+                '</div>'+
+            '</div>';
+
+        // 相关产品（排除当前）
+        var related=allProducts.filter(function(_,i){return i!==idx}).slice(0,3);
+        document.getElementById("relatedProducts").innerHTML=related.map(function(rp,ri){
+            var realIndex=allProducts.indexOf(rp);
+            return '<article class="related-card">'+
+                '<a href="product-detail.html?id='+realIndex+'">'+
+                '<img src="'+rp.image+'" alt="'+rp.name+'">'+
+                '<div class="related-info"><h3>'+rp.name+'</h3><p>'+(rp.summary||rp.desc||'')+'</p></div>'+
+                '</a></article>';
+        }).join("");
+    }
+
+    loadData().then(function(d){
+        var products=d.products||[];
+        if(isNaN(id)||id<0||id>=products.length) id=0;
+        render(products[id], products, id);
+    });
+
+    var h=document.querySelector(".header");
+    window.addEventListener("scroll",function(){h.classList.toggle("scrolled",window.scrollY>20)},{passive:true});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新闻详情 - 湖北慧耕农业科技有限公司</title>
+<link rel="stylesheet" href="css/style.css?v=2.1">
+</head>
+<body class="page-sub">
+<header class="header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html">
+            <img src="images/logo-icon.png" alt="湖北慧耕农业科技有限公司" class="logo-img">
+            <div class="logo-text"><h2>湖北慧耕农业科技有限公司</h2><p>HUBEI HUIGENG AGRICULTURAL TECHNOLOGY CO., LTD</p></div>
+        </a>
+        <nav class="nav"><ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="solutions.html">行业解决方案</a></li>
+            <li><a href="cases.html">服务项目</a></li>
+            <li><a href="service.html">服务与支持</a></li>
+            <li><a href="index.html#news" class="active">新闻中心</a></li>
+            <li><a href="index.html#contact">联系我们</a></li>
+            <li><a href="admin.html" class="admin-btn">后台管理</a></li>
+        </ul></nav>
+    </div>
+</header>
+
+<main>
+    <div class="detail-breadcrumb-wrap">
+        <div class="container">
+            <nav class="page-breadcrumb"><a href="index.html">首页</a><span>›</span><a href="index.html#news">新闻中心</a><span>›</span><span class="cur" id="breadcrumbTitle">新闻详情</span></nav>
+        </div>
+    </div>
+
+    <section class="section" style="padding-top:48px">
+        <div class="container">
+            <div class="news-detail-layout">
+                <article class="news-article" id="newsArticle"></article>
+                <aside class="news-sidebar">
+                    <div class="news-sidebar-box">
+                        <h3>最新动态</h3>
+                        <div id="relatedNews"></div>
+                    </div>
+                    <div class="news-sidebar-box" style="margin-top:16px">
+                        <h3>联系我们</h3>
+                        <p class="sidebar-contact" id="sideContact"></p>
+                    </div>
+                    <div class="news-sidebar-box" style="margin-top:16px">
+                        <h3>相关服务</h3>
+                        <div style="margin-top:8px">
+                            <a href="solutions.html" style="display:block;padding:8px 0;font-size:14px;color:var(--primary);border-bottom:1px solid var(--border)">产品中心 →</a>
+                            <a href="cases.html" style="display:block;padding:8px 0;font-size:14px;color:var(--primary);border-bottom:1px solid var(--border)">服务项目 →</a>
+                            <a href="service.html" style="display:block;padding:8px 0;font-size:14px;color:var(--primary)">服务与支持 →</a>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container footer-inner">
+    <p>© 2026 湖北慧耕农业科技有限公司</p>
+    <p>智慧农业 · 节水灌溉 · 科技赋能</p>
+</div></footer>
+
+<script>
+(function(){
+    var params=new URLSearchParams(window.location.search);
+    var id=parseInt(params.get("id"),10);
+
+    /* 每篇文章的配图轮换 */
+    var newsImages = [
+        "images/news-hero-1.png",
+        "images/news-hero-2.png",
+        "images/news-hero-3.png"
+    ];
+
+    function loadData(){
+        var local=localStorage.getItem("websiteData");
+        if(local) return Promise.resolve(JSON.parse(local));
+        return fetch("data/content.json").then(function(r){return r.json()});
+    }
+
+    function render(news, idx){
+        var n=news[idx];
+        document.title=n.title+" - 湖北慧耕农业科技有限公司";
+        document.getElementById("breadcrumbTitle").textContent=n.title;
+
+        var html='<h1>'+n.title+'</h1>'+
+            '<div class="article-meta">'+
+                '<span class="article-date">📅 '+n.date+'</span>'+
+                '<span class="article-source">'+(n.source||'湖北慧耕农业科技有限公司')+'</span>'+
+            '</div>';
+
+        /* 主图：优先用JSON中的图片，没有则用备用图 */
+        var heroImg = n.image || newsImages[idx] || newsImages[0];
+        html+='<div class="article-hero"><img src="'+heroImg+'" alt="'+n.title+'"></div>';
+
+        /* 导语 */
+        if(n.summary){
+            html+='<p class="article-lead">'+n.summary+'</p>';
+        }
+
+        /* 正文各章节 */
+        if(n.sections&&n.sections.length){
+            n.sections.forEach(function(s,si){
+                html+='<div class="article-section">';
+                html+='<h2>'+s.title+'</h2>';
+
+                /* 在第二个章节前插入相关图片 */
+                if(si===1 && heroImg){
+                    html+='<div class="article-inline-img"><img src="'+heroImg+'" alt="'+s.title+'"></div>';
+                }
+
+                var paragraphs=s.content.split('\n\n');
+                paragraphs.forEach(function(p){
+                    var lines=p.split('\n');
+                    lines.forEach(function(line){
+                        html+='<p>'+line+'</p>';
+                    });
+                });
+                html+='</div>';
+            });
+        }
+
+        /* 底部相关阅读 */
+        html+='<div class="news-bottom-cta">' +
+            '<h3>继续阅读</h3>' +
+            '<div class="news-bottom-links" id="bottomLinks"></div>' +
+        '</div>';
+
+        document.getElementById("newsArticle").innerHTML=html;
+
+        /* 底部链接 */
+        var other=news.filter(function(_,i){return i!==idx});
+        document.getElementById("bottomLinks").innerHTML=other.map(function(on){
+            var ri=news.indexOf(on);
+            return '<a href="news-detail.html?id='+ri+'" class="bottom-link-card">'+
+                '<img src="'+(on.image||newsImages[ri]||newsImages[0])+'" alt="'+on.title+'">'+
+                '<div>'+
+                    '<span class="bl-date">'+on.date+'</span>'+
+                    '<span class="bl-title">'+on.title+'</span>'+
+                '</div>'+
+            '</a>';
+        }).join("");
+
+        /* 侧栏相关 */
+        var related=news.filter(function(_,i){return i!==idx}).slice(0,4);
+        document.getElementById("relatedNews").innerHTML=related.map(function(rn){
+            var ri=news.indexOf(rn);
+            return '<a href="news-detail.html?id='+ri+'" class="related-news-item">'+
+                '<span class="rn-date">'+rn.date+'</span>'+
+                '<span class="rn-title">'+rn.title+'</span>'+
+            '</a>';
+        }).join("");
+    }
+
+    loadData().then(function(d){
+        var news=d.news||[];
+        if(isNaN(id)||id<0||id>=news.length) id=0;
+        render(news, id);
+        document.getElementById("sideContact").innerHTML=
+            '<strong>'+d.companyName+'</strong><br>'+
+            '📞 '+d.phone+'<br>'+
+            '📧 '+d.email;
+    });
+
+    var h=document.querySelector(".header");
+    window.addEventListener("scroll",function(){h.classList.toggle("scrolled",window.scrollY>20)},{passive:true});
+})();
+</script>
+</body>
+</html>

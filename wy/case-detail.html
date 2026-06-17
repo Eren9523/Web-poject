@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>案例详情 - 湖北慧耕农业科技有限公司</title>
+<link rel="stylesheet" href="css/style.css?v=2.1">
+</head>
+<body class="page-sub">
+<header class="header">
+    <div class="container header-inner">
+        <a class="brand" href="index.html">
+            <img src="images/logo-icon.png" alt="湖北慧耕农业科技有限公司" class="logo-img">
+            <div class="logo-text"><h2>湖北慧耕农业科技有限公司</h2><p>HUBEI HUIGENG AGRICULTURAL TECHNOLOGY CO., LTD</p></div>
+        </a>
+        <nav class="nav"><ul>
+            <li><a href="index.html">首页</a></li>
+            <li><a href="about.html">关于我们</a></li>
+            <li><a href="solutions.html">行业解决方案</a></li>
+            <li><a href="cases.html" class="active">服务项目</a></li>
+            <li><a href="service.html">服务与支持</a></li>
+            <li><a href="index.html#contact">联系我们</a></li>
+            <li><a href="admin.html" class="admin-btn">后台管理</a></li>
+        </ul></nav>
+    </div>
+</header>
+
+<main>
+    <section class="case-detail-hero" id="caseHero">
+        <div class="case-detail-hero-bg" id="caseHeroBg"></div>
+        <div class="case-detail-hero-overlay"></div>
+        <div class="container case-detail-hero-content">
+            <nav class="page-breadcrumb"><a href="index.html">首页</a><span>›</span><a href="cases.html">服务项目</a><span>›</span><span class="cur" id="breadcrumbName">案例详情</span></nav>
+            <span class="case-detail-tag" id="caseTag"></span>
+            <h1 id="caseTitle"></h1>
+            <p class="case-detail-subtitle" id="caseSubtitle"></p>
+        </div>
+    </section>
+
+    <!-- 关键数据指标 -->
+    <section class="section" style="padding:40px 0 0">
+        <div class="container">
+            <div class="case-metrics" id="caseMetrics"></div>
+        </div>
+    </section>
+
+    <!-- 案例正文 -->
+    <section class="section" style="padding-top:24px">
+        <div class="container">
+            <div class="case-article-layout">
+                <article class="case-article" id="caseArticle"></article>
+                <aside class="case-sidebar">
+                    <div class="case-sidebar-box">
+                        <h3>更多案例</h3>
+                        <div id="relatedCases"></div>
+                    </div>
+                    <div class="case-sidebar-box" style="margin-top:16px">
+                        <h3>需要咨询？</h3>
+                        <p style="font-size:14px;color:var(--text-secondary);line-height:1.7;margin-top:8px">我们提供免费的项目方案设计与技术咨询服务。</p>
+                        <a href="index.html#contact" class="primary-btn" style="display:inline-flex;margin-top:12px;font-size:13px;min-height:40px;padding:0 18px">联系我们</a>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer><div class="container footer-inner">
+    <p>© 2026 湖北慧耕农业科技有限公司</p>
+    <p>智慧农业 · 节水灌溉 · 科技赋能</p>
+</div></footer>
+
+<script>
+(function(){
+    var params=new URLSearchParams(window.location.search);
+    var id=parseInt(params.get("id"),10);
+
+    function loadData(){
+        var local=localStorage.getItem("websiteData");
+        if(local) return Promise.resolve(JSON.parse(local));
+        return fetch("data/content.json").then(function(r){return r.json()});
+    }
+
+    function render(cases, idx){
+        var c=cases[idx];
+        document.title=c.name+" - 湖北慧耕农业科技有限公司";
+        document.getElementById("breadcrumbName").textContent=c.name;
+
+        /* Hero 背景图 */
+        document.getElementById("caseHeroBg").style.backgroundImage='url("'+c.heroImage+'")';
+
+        /* 标签：取第一个 tag */
+        var tag = (c.tags && c.tags.length) ? c.tags[0] : "";
+        document.getElementById("caseTag").textContent=tag;
+        document.getElementById("caseTitle").textContent=c.name;
+        document.getElementById("caseSubtitle").textContent=c.subtitle||"";
+
+        /* ---- 关键数据指标（从 results 数组提取） ---- */
+        var metricsHtml = '';
+        if (c.results && c.results.length) {
+            c.results.forEach(function(r) {
+                metricsHtml += '<div class="case-metric-card">' +
+                    '<span class="metric-val">' + r.value + '</span>' +
+                    '<span class="metric-lbl">' + r.label + '</span>' +
+                    '<p class="metric-detail">' + r.desc + '</p>' +
+                '</div>';
+            });
+        }
+        document.getElementById("caseMetrics").innerHTML = metricsHtml;
+
+        /* ---- 正文：按 sections 数组逐段渲染 ---- */
+        var html = '';
+
+        /* 项目配图 */
+        if(c.heroImage){
+            html+='<div class="article-hero-img"><img src="'+c.heroImage+'" alt="'+c.name+'"></div>';
+        }
+
+        /* 按 sections 渲染 */
+        if(c.sections && c.sections.length){
+            c.sections.forEach(function(sec){
+                var isConclusion = sec.title === '项目成效';
+                var cls = isConclusion ? 'article-section article-conclusion' : 'article-section';
+
+                html += '<div class="'+cls+'">';
+                html += '<h2>' + sec.title + '</h2>';
+
+                /* 内容按换行分段 */
+                var paragraphs = sec.content.split('\n').filter(function(p){ return p.trim(); });
+                paragraphs.forEach(function(p){
+                    html += '<p>' + p + '</p>';
+                });
+
+                html += '</div>';
+            });
+        }
+
+        /* 底部 CTA */
+        html+='<div class="article-cta">' +
+            '<h3>想了解类似项目方案？</h3>' +
+            '<p>我们可根据您的实际需求，定制专属的智慧灌溉解决方案。</p>' +
+            '<div class="cta-actions">' +
+                '<a href="index.html#contact" class="primary-btn">免费咨询</a>' +
+                '<a href="cases.html" class="ghost-btn-dark">查看更多案例</a>' +
+            '</div>' +
+        '</div>';
+
+        document.getElementById("caseArticle").innerHTML=html;
+
+        /* 侧栏相关案例 */
+        var related=cases.filter(function(_,i){return i!==idx}).slice(0,3);
+        document.getElementById("relatedCases").innerHTML=related.map(function(rc){
+            var ri=cases.indexOf(rc);
+            return '<a href="case-detail.html?id='+ri+'" class="related-case-item">'+
+                '<img src="'+rc.heroImage+'" alt="'+rc.name+'">'+
+                '<div><span class="rc-tag">'+((rc.tags&&rc.tags[0])||"")+'</span><span class="rc-title">'+rc.name+'</span></div>'+
+            '</a>';
+        }).join("");
+    }
+
+    loadData().then(function(d){
+        var cases=d.cases||[];
+        if(isNaN(id)||id<0||id>=cases.length) id=0;
+        render(cases, id);
+    });
+
+    var h=document.querySelector(".header");
+    window.addEventListener("scroll",function(){h.classList.toggle("scrolled",window.scrollY>20)},{passive:true});
+})();
+</script>
+</body>
+</html>

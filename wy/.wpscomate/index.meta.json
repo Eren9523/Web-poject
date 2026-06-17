@@ -1,0 +1,17 @@
+{
+  "version": 3,
+  "managed": true,
+  "indexPath": ".wpscomate/index.md",
+  "structureHash": "sha256:cf05fa4d22c14cd9",
+  "contentSignalHash": "sha256:e3b0c44298fc1c14",
+  "descriptionHash": "sha256:7eba9e151cb3f3d2",
+  "descriptionCachePath": ".wpscomate/index.desc-cache.json",
+  "descriptionStatus": "ready",
+  "generatedAt": "2026-06-17T15:02:09.211Z",
+  "scanTruncated": false,
+  "scanTruncateReason": null,
+  "renderedTruncated": false,
+  "renderedTruncateReason": null,
+  "truncated": false,
+  "truncateReason": null
+}

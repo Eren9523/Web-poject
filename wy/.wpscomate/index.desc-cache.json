@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "generatedAt": "2026-06-17T14:56:59.621Z",
+  "items": {
+    "css": {
+      "description": "样式表文件目录",
+      "fingerprint": "dir:5a0c2921dd37",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-15T11:52:06.757Z"
+    },
+    "data": {
+      "description": "数据文件目录",
+      "fingerprint": "dir:005819df342e",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-15T11:52:06.758Z"
+    },
+    "images": {
+      "description": "存储图片资源的目录",
+      "fingerprint": "dir:5401710298da",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:45:59.650Z"
+    },
+    "js": {
+      "description": "脚本文件目录",
+      "fingerprint": "dir:53141bc9c75b",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-15T11:52:06.764Z"
+    },
+    "admin.html": {
+      "description": "管理后台页面",
+      "fingerprint": "file:1780:1780314179521",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-15T11:52:06.764Z"
+    },
+    "cases.html": {
+      "description": "案例列表页面的HTML文件",
+      "fingerprint": "file:3548:1781708133349",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.618Z"
+    },
+    "css\\style.css": {
+      "description": "定义网站样式的文件",
+      "fingerprint": "file:57182:1781707856604",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:53:49.744Z"
+    },
+    "data\\content.json": {
+      "description": "提供项目数据内容",
+      "fingerprint": "file:39993:1781707587211",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:47:55.887Z"
+    },
+    "index.html": {
+      "description": "网站主页的HTML文件",
+      "fingerprint": "file:13998:1781708132441",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.618Z"
+    },
+    "js\\admin.js": {
+      "description": "管理功能的JavaScript脚本",
+      "fingerprint": "file:4542:1781708152068",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.618Z"
+    },
+    "js\\cases.js": {
+      "description": "案例功能的JavaScript脚本",
+      "fingerprint": "file:6793:1781708171426",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.619Z"
+    },
+    "js\\main.js": {
+      "description": "主逻辑的JavaScript脚本",
+      "fingerprint": "file:14390:1781708162129",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.619Z"
+    },
+    "about.html": {
+      "description": "关于页面的HTML文件",
+      "fingerprint": "file:11126:1781708132725",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.617Z"
+    },
+    "news-detail.html": {
+      "description": "新闻详情页面的HTML文件",
+      "fingerprint": "file:7427:1781708134202",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.619Z"
+    },
+    "product-detail.html": {
+      "description": "产品详情页面的HTML文件",
+      "fingerprint": "file:5935:1781708134394",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.620Z"
+    },
+    "service.html": {
+      "description": "服务页面的HTML文件",
+      "fingerprint": "file:11616:1781708133654",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.620Z"
+    },
+    "solutions.html": {
+      "description": "解决方案页面的HTML文件",
+      "fingerprint": "file:8808:1781708133103",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.620Z"
+    },
+    "case-detail.html": {
+      "description": "案例详情页面的HTML文件",
+      "fingerprint": "file:7424:1781708133951",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T14:56:59.617Z"
+    },
+    "generate_images.py": {
+      "description": "生成或处理图片的Python脚本",
+      "fingerprint": "file:10936:1781526359831",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-15T12:28:46.608Z"
+    },
+    "images\\docx_extract": {
+      "description": "存放文档提取的图片",
+      "fingerprint": "dir:ea7898b82da8",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T13:48:31.058Z"
+    },
+    "images\\docx_extract\\word": {
+      "description": "存放Word文档图片",
+      "fingerprint": "dir:38e58a8d3d2a",
+      "source": "ai",
+      "confidence": 0.5,
+      "updatedAt": "2026-06-17T13:48:31.059Z"
+    }
+  }
+}

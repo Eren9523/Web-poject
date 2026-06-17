@@ -122,6 +122,7 @@ function saveData() {
                 };
             });
 
+            data.version = '2.1';
             localStorage.setItem("websiteData", JSON.stringify(data));
             alert("保存成功！\n\n刷新首页即可查看最新内容。");
         });
